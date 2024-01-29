@@ -1,0 +1,85 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import PostsPreview from "../components/PostsPreview.astro";
+
+const posts = (await getCollection("blog"))
+  ?.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+  .slice(0, 2);
+
+const projects = [
+  {
+    name: "Vosa",
+    description:
+      "A modern, open-source, and self-hosted drop-in replacement for Vercel Analytics. Ready to be deployed in 5 lines of code.",
+    link: "https://vosa.dev",
+  },
+  {
+    name: "Class Charts for Rust",
+    description:
+      "Enables students to create application to interact with their Class Charts data. Currently supports fetching homework and timetables.",
+    link: "https://github.com/veloii/classcharts-rs/",
+  },
+  {
+    name: "Random Roblox Game",
+    description:
+      "Generates a random roblox game from the front page. Uses caching for a a fast experience.",
+    link: "https://random-roblox-game.vercel.app/",
+  },
+];
+
+const hasPosts = posts?.length > 0;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <BaseLayout>
+      <Header title={SITE_TITLE} />
+      <main class="space-y-8 pt-2 pb-8">
+        <p class="text-stone-200">
+          Crafting open-source solutions to
+          <span class="font-semibold text-stone-100">simplify & enhance</span> the
+          developer experience.
+        </p>
+        <div class="h-0.5 bg-stone-800"></div>
+
+        <div class="space-y-10">
+          {
+            projects.map((project) => (
+              <Card
+                name={project.name}
+                link={project.link}
+                description={project.description}
+                external
+              />
+            ))
+          }
+        </div>
+        {
+          hasPosts && (
+            <PostsPreview>
+              {posts.map((post) => (
+                <Card
+                  name={post.data.title}
+                  description={post.data.description}
+                  link={`/blog/${post.slug}`}
+                  date={post.data.pubDate}
+                />
+              ))}
+            </PostsPreview>
+          )
+        }
+      </main>
+      <Footer />
+    </BaseLayout>
+  </body>
+</html>
