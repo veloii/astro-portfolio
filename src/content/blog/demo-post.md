@@ -1,5 +1,5 @@
 ---
-title: 'Things you probably didn't know about JS'
+title: "Things you probably didn't know about JS"
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Feb 10 2024'
 heroImage: '/obscure-js.png'
