@@ -10,7 +10,7 @@ import PostsPreview from "../components/PostsPreview.astro";
 
 const posts = (await getCollection("blog"))
   ?.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
-  .slice(0, 0);
+  .slice(0, 2);
 
 const projects = [
   {
