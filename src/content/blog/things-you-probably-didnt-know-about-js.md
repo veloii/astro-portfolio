@@ -1,10 +1,9 @@
 ---
 title: "Things you probably didn't know about JS"
-description: 'Lorem ipsum dolor sit amet'
+description: "You probably will not know *most* of the things I'm about to show you, and to be honest that's for good reason because a lot of these you really shouldn't do."
 pubDate: 'Feb 10 2024'
 heroImage: '/obscure-js.png'
 ---
-# Things you probably didn’t know about JavaScript
 
 You probably will not know *most* of the things I'm about to show you, and to be honest that's for good reason because a lot of these **you really shouldn't do**. Anyway that being said I'm not going to pad this out with another 3 paragraphs of text. Here goes...
 
