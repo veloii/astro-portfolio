@@ -1,11 +1,9 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "paths": {
-      "~/*": [
-        "./*"
-      ]
-    }
-  }
+	"extends": "astro/tsconfigs/strictest",
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"paths": {
+			"~/*": ["./*"]
+		}
+	}
 }

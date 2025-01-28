@@ -1,16 +1,10 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { getCollection } from "astro:content";
-import PostsPreview from "../components/PostsPreview.astro";
-
-const posts = (await getCollection("blog"))
-  ?.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
-  .slice(0, 2);
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const projects = [
   {
@@ -38,8 +32,6 @@ const projects = [
     link: "https://classchartsapi.github.io/api-docs/",
   },
 ];
-
-const hasPosts = posts?.length > 0;
 ---
 
 <!doctype html>
@@ -70,20 +62,6 @@ const hasPosts = posts?.length > 0;
             ))
           }
         </div>
-        {
-          hasPosts && (
-            <PostsPreview>
-              {posts.map((post) => (
-                <Card
-                  name={post.data.title}
-                  description={post.data.description}
-                  link={`/blog/${post.slug}`}
-                  date={post.data.pubDate}
-                />
-              ))}
-            </PostsPreview>
-          )
-        }
       </main>
       <Footer />
     </BaseLayout>

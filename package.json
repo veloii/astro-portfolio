@@ -1,30 +1,29 @@
 {
-  "name": "astro-portfolio",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.1.0",
-    "@astrojs/rss": "^4.0.4",
-    "@astrojs/sitemap": "^3.0.5",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.2.6",
-    "clsx": "^2.1.0",
-    "lucide-react": "^0.316.0",
-    "tailwind-merge": "^2.2.1",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "prettier": "^3.2.4",
-    "prettier-plugin-astro": "^0.13.0"
-  }
+	"name": "astro-portfolio",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.9.4",
+		"@astrojs/mdx": "^4.0.7",
+		"@astrojs/sitemap": "^3.2.1",
+		"@astrojs/tailwind": "^5.1.5",
+		"@tailwindcss/vite": "^4.0.0",
+		"astro": "^5.1.10",
+		"clsx": "^2.1.1",
+		"lucide-react": "^0.474.0",
+		"tailwind-merge": "^2.6.0",
+		"tailwindcss": "^4.0.0",
+		"typescript": "^5.7.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@tailwindcss/typography": "^0.5.16"
+	}
 }

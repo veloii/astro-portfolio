@@ -1,31 +1,34 @@
 ---
 interface Props {
-  date: Date;
-  relative?: boolean;
+	date: Date;
+	relative?: boolean;
 }
 
 function timeDifference(current: Date, previous: Date) {
-  const msPerMinute = 60 * 1000;
-  const msPerHour = msPerMinute * 60;
-  const msPerDay = msPerHour * 24;
-  const msPerMonth = msPerDay * 30;
-  const msPerYear = msPerDay * 365;
+	const msPerMinute = 60 * 1000;
+	const msPerHour = msPerMinute * 60;
+	const msPerDay = msPerHour * 24;
+	const msPerMonth = msPerDay * 30;
+	const msPerYear = msPerDay * 365;
 
-  const elapsed = current.valueOf() - previous.valueOf();
+	const elapsed = current.valueOf() - previous.valueOf();
 
-  if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + "s ago";
-  } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + "mins ago";
-  } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + "hr ago";
-  } else if (elapsed < msPerMonth) {
-    return Math.round(elapsed / msPerDay) + "d ago";
-  } else if (elapsed < msPerYear) {
-    return Math.round(elapsed / msPerMonth) + "m ago";
-  } else {
-    return Math.round(elapsed / msPerYear) + "y ago";
-  }
+	if (elapsed < msPerMinute) {
+		return `${Math.round(elapsed / 1000)}s ago`;
+	}
+	if (elapsed < msPerHour) {
+		return `${Math.round(elapsed / msPerMinute)}mins ago`;
+	}
+	if (elapsed < msPerDay) {
+		return `${Math.round(elapsed / msPerHour)}hr ago`;
+	}
+	if (elapsed < msPerMonth) {
+		return `${Math.round(elapsed / msPerDay)}d ago`;
+	}
+	if (elapsed < msPerYear) {
+		return `${Math.round(elapsed / msPerMonth)}m ago`;
+	}
+	return `${Math.round(elapsed / msPerYear)}y ago`;
 }
 
 const { relative, date } = Astro.props;
