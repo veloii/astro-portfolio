@@ -1,0 +1,27 @@
+{
+  "name": "@veloi.me/snippets",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.{tsx,ts}"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "@veloi.me/typescript-config": "workspace:*",
+    "eslint": "^9.20.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "superjson": "^2.2.2",
+    "typescript": "5.7.3",
+    "zustand": "^5.0.3"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}

@@ -1,0 +1,40 @@
+{
+	"name": "@veloi.me/web",
+	"type": "module",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@astrojs/alpinejs": "^0.4.3",
+		"@astrojs/check": "^0.9.4",
+		"@astrojs/internal-helpers": "^0.4.2",
+		"@astrojs/mdx": "^4.0.7",
+		"@astrojs/sitemap": "^3.2.1",
+		"@astrojs/tailwind": "^5.1.5",
+		"@astropub/icons": "^0.2.0",
+		"@tailwindcss/vite": "^4.0.0",
+		"@types/alpinejs": "^3.13.11",
+		"@veloi.me/snippets": "workspace:*",
+		"alpinejs": "^3.14.8",
+		"astro": "^5.1.10",
+		"clsx": "^2.1.1",
+		"fast-glob": "^3.3.3",
+		"motion": "^12.4.7",
+		"nanoid": "^5.1.0",
+		"resolve-package-path": "^4.0.3",
+		"shiki": "^2.2.0",
+		"tailwind-merge": "^2.6.0",
+		"tailwindcss": "^4.0.0",
+		"typescript": "^5.7.3"
+	},
+	"devDependencies": {
+		"@tailwindcss/typography": "^0.5.16",
+		"@veloi.me/typescript-config": "workspace:*"
+	}
+}

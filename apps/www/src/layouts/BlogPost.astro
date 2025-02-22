@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry, ReferenceDataEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import ExtendedLayout from "./ExtendedLayout.astro";
+import SplitLayout from "./SplitLayout.astro";
+import { getEntry } from "astro:content";
+import FileBrowser from "../components/FileBrowser.astro";
+import { Code } from "astro:components";
+import path from "node:path";
+
+type Props = CollectionEntry<"snippets">["data"] & { slug: string };
+
+function relativeEntryToSlug(
+	slug: string,
+	entry: ReferenceDataEntry<"snippetImplementations", string>,
+) {
+	const slugDirectory = path.parse(slug).dir;
+	const id = path.join(slugDirectory, entry.id);
+	return { ...entry, id };
+}
+
+const {
+	title,
+	description,
+	implementation: implementationName,
+	dependencies: dependencyNames,
+	usage: usageName,
+	slug,
+} = Astro.props;
+
+const entry = relativeEntryToSlug.bind(null, slug);
+
+const implementation = await getEntry(entry(implementationName));
+const usage = usageName && (await getEntry(entry(usageName)));
+const dependencies = dependencyNames
+	? await Promise.all(dependencyNames.map(entry).map((s) => getEntry(s)))
+	: [];
+const files = [implementation, ...dependencies].filter(Boolean);
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body>
+    <ExtendedLayout>
+      <Header />
+      <Breadcrumbs
+        items={[
+          { href: "/", label: "Home" },
+          { href: "/snippets", label: "Snippets" },
+          { label: title },
+        ]}
+        class="mt-4"
+      />
+      <main
+        class="prose prose-h2:font-semibold prose-h1:font-bold prose-h1:text-2xl prose-h2:text-lg prose-invert prose-stone pt-8 max-w-full"
+      >
+        <h1 class="!mb-0">{title}</h1>
+        <SplitLayout>
+          <article class="min-w-0">
+            <slot />
+
+            {usage && (
+            <>
+              <h2>Usage</h2>
+              <Code code={usage.data.code} class="max-h-180 p-3 text-sm leading-6" lang="tsx" />
+            </>
+            )}
+          </article>
+          <div class="w-64 shrink-0" slot="sidebar">Sidebar content</div>
+        </SplitLayout>
+        <h2>Implementation</h2>
+        <FileBrowser
+          files={files.map((file) => ({
+            path: file?.id,
+            code: file?.data.code,
+          }))}
+          config={{ lang: "tsx" }}
+        />
+        <Footer />
+      </main>
+    </ExtendedLayout>
+  </body>
+</html>

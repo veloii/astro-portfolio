@@ -1,0 +1,29 @@
+---
+type Props = {
+	name: string;
+	link: string;
+	description: string;
+};
+
+const { name, description, link } = Astro.props;
+---
+
+<a href={link}>
+  <div class="group-hover:opacity-50 hover:opacity-100 border-l-0 border-stone-800 p-3 group/card flex justify-between items-center transition ease-out">
+    <div>
+      <div class="flex justify-between gap-4 items-center mb-1.5">
+        {name}
+      </div>
+      <p class="text-stone-400 text-balance">
+        {description}
+      </p>
+    </div>
+
+    <svg fill="none" class="stroke-stone-600 group-hover/card:stroke-stone-300 transition ease-out stroke-2" width="12" height="12" viewBox="0 0 10 10" aria-hidden="true">
+      <g fill-rule="evenodd">
+        <path class="stroke-stone-50 group-hover/card:opacity-100 opacity-0 transition ease-out" d="M0 5h7"></path>
+        <path class="group-hover/card:translate-x-[3px] transition ease-out" d="M1 1l4 4-4 4"></path>
+      </g>
+    </svg>
+  </div>
+</a>

@@ -1,0 +1,69 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Card from "../components/Card.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+
+const projects = [
+	{
+		name: "Vosa",
+		description:
+			"A modern, open-source, and self-hosted drop-in replacement for Vercel Analytics. Ready to be deployed in 5 lines of code.",
+		link: "https://vosa.dev",
+	},
+	{
+		name: "Simple Scoped Zustand",
+		description:
+			"A tiny library to make consumption of big zustand stores easier with scoped hooks that perform logic in a parent provider.",
+		link: "https://github.com/veloii/simple-scoped-zustand",
+	},
+	{
+		name: "def-gen",
+		description:
+			"A powerful tool to infer types from JavaScript values and generate code from these inferred types.",
+		link: "https://github.com/veloii/def-gen/",
+	},
+	{
+		name: "ClassCharts API Docs",
+		description:
+			"Unofficial OpenAPI docs for the student & parent clients to simplify building around ClassCharts.",
+		link: "https://classchartsapi.github.io/api-docs/",
+	},
+];
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <DefaultLayout>
+      <Header title={SITE_TITLE} />
+      <main class="space-y-8 pt-2 pb-8">
+        <p class="text-stone-200">
+          Crafting open-source solutions to
+          <span class="font-semibold text-stone-100">simplify & enhance</span> the
+          developer experience.
+        </p>
+        <div class="h-0.5 bg-stone-800"></div>
+
+        <div class="space-y-10">
+          {
+            projects.map((project) => (
+              <Card
+                name={project.name}
+                link={project.link}
+                description={project.description}
+                external
+              />
+            ))
+          }
+        </div>
+      </main>
+      <Footer />
+    </DefaultLayout>
+  </body>
+</html>

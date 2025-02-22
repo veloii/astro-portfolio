@@ -1,0 +1,12 @@
+{
+  "name": "@veloi.me/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "astro": "^5.1.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

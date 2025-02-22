@@ -1,0 +1,13 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "./base.json",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"allowImportingTsExtensions": true,
+		"module": "ESNext",
+		"target": "ESNext",
+		"esModuleInterop": true,
+		"moduleResolution": "bundler",
+		"noEmit": true
+	}
+}

@@ -1,0 +1,28 @@
+---
+type Props = {
+	name: string;
+	link: string;
+	description: string;
+	external?: boolean;
+};
+
+const { external, name, description, link } = Astro.props;
+---
+
+<div class="border-l-0 border-stone-800 space-y-1">
+  <div class="flex justify-between gap-4 items-center">
+    <a
+      target={external ? "_blank" : "_self"}
+      href={link}
+      class:list={[
+        "font-semibold animated-underline",
+        { "cursor-newtab": external },
+      ]}
+    >
+      {name}
+    </a>
+  </div>
+  <p class="text-stone-300 text-balance">
+    {description}
+  </p>
+</div>

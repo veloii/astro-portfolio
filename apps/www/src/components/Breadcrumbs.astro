@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import ChevronRight from "@astropub/icons/ChevronRight";
+
+type Props = {
+	items: { href?: string; label: string }[];
+} & HTMLAttributes<"div">;
+
+const {
+	items,
+	"class:list": classes,
+	class: className,
+	...props
+} = Astro.props;
+---
+
+<div class:list={["flex gap-2 text-sm", className, classes]} {...props}>
+  {
+    items.map((item, index) => {
+      const component = (
+        <div class="flex items-center gap-1">
+          <p
+            class:list={[
+              item.href
+                ? "text-stone-300 animated-underline"
+                : "text-stone-400",
+            ]}
+          >
+            {item.label}
+          </p>
+          {index !== items.length - 1 && (
+            <ChevronRight class="shrink-0 size-5 text-stone-500" />
+          )}
+        </div>
+      );
+      if (item.href) return <a href={item.href}>{component}</a>;
+      return component;
+    })
+  }
+</div>
