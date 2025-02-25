@@ -63,7 +63,7 @@ const byCollection = Object.values(
           {byCollection.map(({collection, snippets}) => (
             <div class="group/close py-6">
               {collection && (
-                <SeparatorGlow colour={collection.colour} class="mb-4 group-hover:opacity-50 group-hover/close:opacity-100 transition ease-out">
+                <SeparatorGlow colour={collection.colour} class="mb-4 group-hover:opacity-50 group-hover:grayscale-100 group-hover/close:grayscale-0 group-hover/close:opacity-100 transition ease-out">
                   <Chip class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" colour={collection.colour}>{collection.id}</Chip>
                 </SeparatorGlow>
               )}
