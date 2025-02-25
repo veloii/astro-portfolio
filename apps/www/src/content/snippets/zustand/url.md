@@ -6,6 +6,7 @@ tags: ["zustand"]
 dependencies: ["../state-serialization.ts"]
 implementation: "url.ts"
 usage: "url.example.ts"
+collection: "zustand"
 ---
 
 ## Context

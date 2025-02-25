@@ -5,11 +5,11 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import ExtendedLayout from "./ExtendedLayout.astro";
-import SplitLayout from "./SplitLayout.astro";
 import { getEntry } from "astro:content";
 import FileBrowser from "../components/FileBrowser.astro";
 import { Code } from "astro:components";
 import path from "node:path";
+import Chip from "../components/Chip.astro";
 
 type Props = CollectionEntry<"snippets">["data"] & { slug: string };
 
@@ -25,20 +25,23 @@ function relativeEntryToSlug(
 const {
 	title,
 	description,
-	implementation: implementationName,
-	dependencies: dependencyNames,
-	usage: usageName,
+	implementation: implementationRef,
+	dependencies: dependencyRefs,
+	usage: usageRef,
 	slug,
+	collection: collectionRef,
 } = Astro.props;
 
 const entry = relativeEntryToSlug.bind(null, slug);
 
-const implementation = await getEntry(entry(implementationName));
-const usage = usageName && (await getEntry(entry(usageName)));
-const dependencies = dependencyNames
-	? await Promise.all(dependencyNames.map(entry).map((s) => getEntry(s)))
+const implementation = await getEntry(entry(implementationRef));
+const usage = usageRef && (await getEntry(entry(usageRef)));
+const dependencies = dependencyRefs
+	? await Promise.all(dependencyRefs.map(entry).map((s) => getEntry(s)))
 	: [];
 const files = [implementation, ...dependencies].filter(Boolean);
+
+const collection = collectionRef && (await getEntry(collectionRef));
 ---
 
 <html lang="en">
@@ -60,8 +63,15 @@ const files = [implementation, ...dependencies].filter(Boolean);
       <main
         class="prose prose-h2:font-semibold prose-h1:font-bold prose-h1:text-2xl prose-h2:text-lg prose-invert prose-stone pt-8 max-w-full"
       >
-        <h1 class="!mb-0">{title}</h1>
-        <SplitLayout>
+        <h1 class="!mb-3">{title}</h1>
+        <div class="space-x-4">
+          {collection && (
+            <Chip colour={collection.data.colour}>
+              {collection.data.id}
+            </Chip>
+          )}
+        </div>
+        <!-- <SplitLayout> -->
           <article class="min-w-0">
             <slot />
 
@@ -72,8 +82,8 @@ const files = [implementation, ...dependencies].filter(Boolean);
             </>
             )}
           </article>
-          <div class="w-64 shrink-0" slot="sidebar">Sidebar content</div>
-        </SplitLayout>
+          <!-- <div class="w-64 shrink-0" slot="sidebar">Sidebar content</div> -->
+        <!-- </SplitLayout> -->
         <h2>Implementation</h2>
         <FileBrowser
           files={files.map((file) => ({

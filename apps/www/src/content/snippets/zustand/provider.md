@@ -3,6 +3,7 @@ title: "Zustand Store Provider"
 description: "Wrapper to scope your stores via a React context"
 pubDate: "Feb 22 2025"
 tags: ["zustand"]
+collection: "zustand"
 implementation: "provider.tsx"
 usage: "provider.example.tsx"
 ---

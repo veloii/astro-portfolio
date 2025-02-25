@@ -1,11 +1,15 @@
 ---
+import type { InferEntrySchema } from "astro:content";
+import Chip from "./Chip.astro";
+
 type Props = {
 	name: string;
 	link: string;
 	description: string;
+	collection?: InferEntrySchema<"snippetCollections"> | undefined;
 };
 
-const { name, description, link } = Astro.props;
+const { name, description, link, collection } = Astro.props;
 ---
 
 <a href={link}>
@@ -17,6 +21,9 @@ const { name, description, link } = Astro.props;
       <p class="text-stone-400 text-balance">
         {description}
       </p>
+      {collection && (
+        <Chip class="mt-2.5" colour={collection.colour}>{collection.id}</Chip>
+      )}
     </div>
 
     <svg fill="none" class="stroke-stone-600 group-hover/card:stroke-stone-300 transition ease-out stroke-2" width="12" height="12" viewBox="0 0 10 10" aria-hidden="true">

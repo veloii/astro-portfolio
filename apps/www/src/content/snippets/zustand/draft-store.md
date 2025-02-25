@@ -3,6 +3,7 @@ title: "Zustand Draft Store"
 description: "Update your store in batch through a clone"
 pubDate: "Feb 22 2025"
 tags: ["zustand"]
+collection: "zustand"
 implementation: "draft-store.tsx"
 usage: "draft-store.example.tsx"
 ---

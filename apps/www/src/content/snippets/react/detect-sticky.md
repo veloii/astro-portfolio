@@ -3,6 +3,7 @@ title: "React Detect Sticky"
 description: "Watch for sticky elements being hoisted"
 pubDate: "Feb 22 2025"
 tags: ["react"]
+collection: "react"
 implementation: "use-detect-sticky.ts"
 usage: "use-detect-sticky.example.tsx"
 ---

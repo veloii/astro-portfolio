@@ -1,15 +1,48 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
-import Card from "../../components/Card.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
 import SnippetCard from "../../components/SnippetCard.astro";
+import Chip from "../../components/Chip.astro";
 
 const snippets = (await getCollection("snippets"))?.sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+);
+
+const snippetsWithCollections = await Promise.all(
+	snippets.map(async (snippet) => {
+		const collection =
+			snippet.data.collection && (await getEntry(snippet.data.collection));
+		const snippetData = { ...snippet.data, collection };
+		return { ...snippet, data: snippetData };
+	}),
+);
+
+type Collection = InferEntrySchema<"snippetCollections">;
+type Snippet = { data: InferEntrySchema<"snippets">; slug: string };
+
+const byCollection = Object.values(
+	snippetsWithCollections.reduce(
+		(acc, snippet) => {
+			const collectionId = snippet.data.collection?.id ?? 0;
+			if (collectionId in acc) {
+				acc[collectionId]?.snippets.push(snippet);
+			} else {
+				acc[collectionId] = {
+					collection: snippet.data.collection?.data,
+					snippets: [snippet],
+				};
+			}
+			return acc;
+		},
+		{} as Record<
+			string | number,
+			{ collection: Collection | undefined; snippets: Snippet[] }
+		>,
+	),
 );
 ---
 
@@ -25,23 +58,26 @@ const snippets = (await getCollection("snippets"))?.sort(
         <!-- <p class="text-stone-200">.</p> -->
         <div class="h-0.5 bg-stone-800"></div>
 
-        {
-          snippets?.length > 0 ? (
-            <div class="-mx-3 group">
-              {snippets.map((snippets) => (
+        <div class="-mx-3 group -mt-6">
+          {byCollection.map(({collection, snippets}) => (
+            <div class="group/close py-6">
+              {collection && (
+                <div class="flex items-center group-hover:opacity-50 group-hover/close:opacity-100 transition ease-out">
+                  <div class="h-px bg-stone-800 flex-grow" />
+                  <Chip colour={collection.colour}>{collection.id}</Chip>
+                  <div class="h-px bg-stone-800 flex-grow" />
+                </div>
+              )}
+              {snippets.map((snippet) => (
                 <SnippetCard
-                  name={snippets.data.title}
-                  description={snippets.data.description}
-                  link={`/snippets/${snippets.slug}`}
+                  name={snippet.data.title}
+                  description={snippet.data.description}
+                  link={`/snippets/${snippet.slug}`}
                 />
               ))}
             </div>
-          ) : (
-            <div class="text-stone-200">
-              <p>There are no snippets yet.</p>
-            </div>
-          )
-        }
+          ))}
+        </div>
       </main>
       <Footer />
     </DefaultLayout>

@@ -3,6 +3,7 @@ title: "React Scroll Threshold"
 description: "Performantly check the scroll position of an element"
 pubDate: "Feb 22 2025"
 tags: ["react"]
+collection: "react"
 implementation: "use-scroll-threshold.ts"
 usage: "use-scroll-threshold.example.tsx"
 ---

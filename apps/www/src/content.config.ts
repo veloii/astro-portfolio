@@ -1,3 +1,4 @@
+import { file } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 import fg from "fast-glob";
 import fs from "node:fs/promises";
@@ -17,6 +18,7 @@ const snippets = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		tags: z.array(z.string()).optional(),
+		collection: reference("snippetCollections").optional(),
 		dependencies: z.array(reference("snippetImplementations")).optional(),
 		implementation: reference("snippetImplementations"),
 	}),
@@ -43,4 +45,34 @@ const snippetImplementations = defineCollection({
 	}),
 });
 
-export const collections = { snippets, snippetImplementations };
+const snippetCollections = defineCollection({
+	loader: file("src/content/collections.json"),
+	schema: z.object({
+		id: z.string(),
+		colour: z.enum([
+			"red",
+			"orange",
+			"amber",
+			"yellow",
+			"lime",
+			"green",
+			"emerald",
+			"teal",
+			"cyan",
+			"sky",
+			"blue",
+			"indigo",
+			"violet",
+			"purple",
+			"fuchsia",
+			"pink",
+			"rose",
+		]),
+	}),
+});
+
+export const collections = {
+	snippets,
+	snippetImplementations,
+	snippetCollections,
+};

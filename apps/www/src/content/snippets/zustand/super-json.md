@@ -3,6 +3,7 @@ title: "Zustand Superjson Storage"
 description: "Safely store non-primitive types in a store"
 pubDate: "Feb 22 2025"
 tags: ["zustand"]
+collection: "zustand"
 implementation: "superjson.ts"
 usage: "superjson.example.ts"
 ---
