@@ -33,7 +33,7 @@ const {
           )}
         </div>
       );
-      if (item.href) return <a href={item.href}>{component}</a>;
+      if (item.href) return <a data-astro-prefetch href={item.href}>{component}</a>;
       return component;
     })
   }

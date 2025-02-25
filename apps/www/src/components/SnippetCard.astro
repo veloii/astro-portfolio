@@ -12,7 +12,7 @@ type Props = {
 const { name, description, link, collection } = Astro.props;
 ---
 
-<a href={link}>
+<a href={link} data-astro-prefetch>
   <div class="group-hover:opacity-50 hover:opacity-100 border-l-0 border-stone-800 p-3 group/card flex justify-between items-center transition ease-out">
     <div>
       <div class="flex justify-between gap-4 items-center mb-1.5">

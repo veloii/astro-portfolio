@@ -9,6 +9,7 @@ import alpinejs from "@astrojs/alpinejs";
 export default defineConfig({
     site: "https://veloi.me",
     integrations: [mdx(), sitemap(), alpinejs()],
+    prefetch: true,
     vite: {
         plugins: [tailwindcss()],
     },
