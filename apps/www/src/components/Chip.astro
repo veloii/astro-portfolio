@@ -33,6 +33,7 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={["inline-block rounded-full px-2.5 py-0.5 text-sm", colours[colour], className, classes]} {...props}>
+<div class:list={["inline-block relative rounded-full overflow-hidden px-2.5 py-0.5 text-sm", colours[colour], className, classes]} {...props}>
 	<slot />
+	<div class="bg-white absolute -bottom-1 blur h-1.5 w-2/3 left-1/2 -translate-x-1/2" />
 </div>

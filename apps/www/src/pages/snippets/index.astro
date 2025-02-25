@@ -7,6 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import DefaultLayout from "../../layouts/DefaultLayout.astro";
 import SnippetCard from "../../components/SnippetCard.astro";
 import Chip from "../../components/Chip.astro";
+import SeparatorGlow from "../../components/SeparatorGlow.astro";
 
 const snippets = (await getCollection("snippets"))?.sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
@@ -62,11 +63,9 @@ const byCollection = Object.values(
           {byCollection.map(({collection, snippets}) => (
             <div class="group/close py-6">
               {collection && (
-                <div class="flex items-center group-hover:opacity-50 group-hover/close:opacity-100 transition ease-out">
-                  <div class="h-px bg-stone-800 flex-grow" />
-                  <Chip colour={collection.colour}>{collection.id}</Chip>
-                  <div class="h-px bg-stone-800 flex-grow" />
-                </div>
+                <SeparatorGlow colour={collection.colour} class="mb-4 group-hover:opacity-50 group-hover/close:opacity-100 transition ease-out">
+                  <Chip class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" colour={collection.colour}>{collection.id}</Chip>
+                </SeparatorGlow>
               )}
               {snippets.map((snippet) => (
                 <SnippetCard

@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+const colours = {
+	red: "via-red-500/30",
+	orange: "via-orange-500/30",
+	amber: "via-amber-500/30",
+	yellow: "via-yellow-500/30",
+	lime: "via-lime-500/30",
+	green: "via-green-500/30",
+	emerald: "via-emerald-500/30",
+	teal: "via-teal-500/30",
+	cyan: "via-cyan-500/30",
+	sky: "via-sky-500/30",
+	blue: "via-blue-500/30",
+	indigo: "via-indigo-500/30",
+	violet: "via-violet-500/30",
+	purple: "via-purple-500/30",
+	fuchsia: "via-fuchsia-500/30",
+	pink: "via-pink-500/30",
+	rose: "via-rose-500/30",
+};
+
+type Props = {
+	colour: keyof typeof colours;
+} & HTMLAttributes<"div">;
+
+const {
+	colour,
+	"class:list": classes,
+	class: className,
+	...props
+} = Astro.props;
+---
+
+<div class:list={["h-px bg-gradient-to-r from-stone-800 to-stone-800", colours[colour], className, classes]} {...props}>
+	<slot />
+</div>
