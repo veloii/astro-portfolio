@@ -2,6 +2,10 @@
   "name": "@veloi.me/typescript-config",
   "version": "0.0.0",
   "private": true,
+  "exports": {
+    "./astro.json": "./astro.json",
+    "./snippets.json": "./base.json"
+  },
   "license": "MIT",
   "devDependencies": {
     "astro": "^5.1.10"

@@ -6,6 +6,7 @@ import { escapeString } from "../utils/escape-string";
 type Props = {
 	files: { path: string; code: string }[];
 	config?: Omit<ComponentProps<typeof Code>, "code">;
+	dataId?: string;
 } & HTMLAttributes<"div">;
 
 const {
@@ -13,8 +14,11 @@ const {
 	"class:list": classes,
 	class: className,
 	config,
+	dataId: dataIdProp,
 	...props
 } = Astro.props;
+
+const dataId = dataIdProp ? escapeString(dataIdProp) : "activeFile";
 
 const file = files[0];
 if (file === undefined) throw new Error("Must contain one file");
@@ -23,7 +27,7 @@ const defaultPath = escapeString(file.path);
 
 <div
   class:list={["not-prose bg-stone-800 rounded-2xl overflow-hidden relative", className, classes]}
-  x-data=`{ activeFile: '${defaultPath}' }`
+  {...(dataIdProp ? {} : {"x-data": `{ '${dataId}': '${defaultPath}' }`})}
   {...props}
 >
   <div class="border-stone-700 px-2 flex overflow-x-auto pt-2 absolute bg-gradient-to-b from-stone-800 from-40% to-transparent w-full pb-6">
@@ -32,8 +36,8 @@ const defaultPath = escapeString(file.path);
       const path = file.path.split("/")
       return (
         <button
-          @click=`activeFile = '${filePath}'`
-          :data-active=`activeFile === '${filePath}'`
+          @click=`${dataId} = '${filePath}'`
+          :data-active=`${dataId} === '${filePath}'`
           class="shrink-0 border border-transparent data-active:bg-stone-700 data-active:border-stone-600 data-active:text-stone-200 text-stone-400 rounded-full px-3 py-0.5 text-sm cursor-pointer"
         >
           {path.map((entry, index) => {
@@ -48,6 +52,6 @@ const defaultPath = escapeString(file.path);
     })}
   </div>
   {files.map((file) => (
-    <Code code={file.code} {...config} class="max-h-180 p-3 pt-12 text-sm leading-6" x-show=`activeFile === '${escapeString(file.path)}'` />
+    <Code code={file.code} {...config} class="max-h-180 p-3 pt-12 text-sm leading-6" x-show=`${dataId} === '${escapeString(file.path)}'` />
   ))}
 </div>

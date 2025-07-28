@@ -14,13 +14,21 @@ const snippets = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		usage: reference("snippetImplementations").optional(),
+		usage: z
+			.union([
+				z.array(reference("snippetImplementations")),
+				reference("snippetImplementations"),
+			])
+			.optional(),
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		tags: z.array(z.string()).optional(),
 		collection: reference("snippetCollections").optional(),
 		dependencies: z.array(reference("snippetImplementations")).optional(),
-		implementation: reference("snippetImplementations"),
+		implementation: z.union([
+			z.array(reference("snippetImplementations")),
+			reference("snippetImplementations"),
+		]),
 	}),
 });
 

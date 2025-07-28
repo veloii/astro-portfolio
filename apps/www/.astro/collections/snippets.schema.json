@@ -13,39 +13,85 @@
         "usage": {
           "anyOf": [
             {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "collection": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "collection"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "collection": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "slug",
+                      "collection"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
             },
             {
-              "type": "object",
-              "properties": {
-                "id": {
+              "anyOf": [
+                {
                   "type": "string"
                 },
-                "collection": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "collection"
-              ],
-              "additionalProperties": false
-            },
-            {
-              "type": "object",
-              "properties": {
-                "slug": {
-                  "type": "string"
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "collection": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "collection"
+                  ],
+                  "additionalProperties": false
                 },
-                "collection": {
-                  "type": "string"
+                {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string"
+                    },
+                    "collection": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "collection"
+                  ],
+                  "additionalProperties": false
                 }
-              },
-              "required": [
-                "slug",
-                "collection"
-              ],
-              "additionalProperties": false
+              ]
             }
           ]
         },
@@ -171,39 +217,85 @@
         "implementation": {
           "anyOf": [
             {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "collection": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "collection"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "collection": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "slug",
+                      "collection"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
             },
             {
-              "type": "object",
-              "properties": {
-                "id": {
+              "anyOf": [
+                {
                   "type": "string"
                 },
-                "collection": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "collection"
-              ],
-              "additionalProperties": false
-            },
-            {
-              "type": "object",
-              "properties": {
-                "slug": {
-                  "type": "string"
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "collection": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "collection"
+                  ],
+                  "additionalProperties": false
                 },
-                "collection": {
-                  "type": "string"
+                {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string"
+                    },
+                    "collection": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "collection"
+                  ],
+                  "additionalProperties": false
                 }
-              },
-              "required": [
-                "slug",
-                "collection"
-              ],
-              "additionalProperties": false
+              ]
             }
           ]
         },

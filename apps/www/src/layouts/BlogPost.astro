@@ -4,12 +4,14 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import DemoContainer from "../components/DemoContainer.astro";
 import ExtendedLayout from "./ExtendedLayout.astro";
-import { getEntry } from "astro:content";
+import { getEntry, type CollectionKey, type DataEntryMap } from "astro:content";
 import FileBrowser from "../components/FileBrowser.astro";
-import { Code } from "astro:components";
 import path from "node:path";
 import Chip from "../components/Chip.astro";
+import { getSnippetWrapper } from "../../generated/snippet-wrappers";
+import { escapeString } from "../utils/escape-string";
 
 type Props = CollectionEntry<"snippets">["data"] & { slug: string };
 
@@ -20,6 +22,19 @@ function relativeEntryToSlug(
 	const slugDirectory = path.parse(slug).dir;
 	const id = path.join(slugDirectory, entry.id);
 	return { ...entry, id };
+}
+
+async function getEntries<
+	C extends CollectionKey,
+	E extends keyof DataEntryMap[C] = string,
+>(refs: ReferenceDataEntry<C, E>[] | undefined) {
+	return refs ? await Promise.all(refs.map((s) => getEntry(s))) : [];
+}
+
+function arrayify<T>(input: T | T[]) {
+	return (Array.isArray(input) ? input : [input]).filter(
+		(a) => a !== undefined,
+	);
 }
 
 const {
@@ -34,14 +49,20 @@ const {
 
 const entry = relativeEntryToSlug.bind(null, slug);
 
-const implementation = await getEntry(entry(implementationRef));
-const usage = usageRef && (await getEntry(entry(usageRef)));
-const dependencies = dependencyRefs
-	? await Promise.all(dependencyRefs.map(entry).map((s) => getEntry(s)))
-	: [];
-const files = [implementation, ...dependencies].filter(Boolean);
+const dependencies = await getEntries(dependencyRefs?.map(entry));
+const usage = await getEntries(arrayify(usageRef).map(entry));
+
+const implementation = await getEntries(arrayify(implementationRef).map(entry));
+const files = [...implementation, ...dependencies].filter(Boolean);
 
 const collection = collectionRef && (await getEntry(collectionRef));
+const defaultUsageFile = usage[0]?.id;
+const usageComponents = await Promise.all(
+	usage.map(async (file) => ({
+		Component: getSnippetWrapper(file.id),
+		id: file.id,
+	})),
+);
 ---
 
 <html lang="en">
@@ -72,27 +93,39 @@ const collection = collectionRef && (await getEntry(collectionRef));
           )}
         </div>
         <!-- <SplitLayout> -->
-          <article class="min-w-0">
-            <slot />
 
-            {usage && (
-            <>
-              <h2>Usage</h2>
-              <Code code={usage.data.code} class="max-h-180 p-3 text-sm leading-6" lang="tsx" />
-            </>
-            )}
-          </article>
+        <article class="min-w-0" x-data=`{ activeUsageFile: '${defaultUsageFile}' }`>
+          <slot />
+          <h2>Usage</h2>
+          <FileBrowser
+            files={usage.map((file) => ({
+              path: file?.id,
+              code: file?.data.code,
+            }))}
+            config={{ lang: "tsx" }}
+            dataId="activeUsageFile"
+          />
+
           <!-- <div class="w-64 shrink-0" slot="sidebar">Sidebar content</div> -->
         <!-- </SplitLayout> -->
-        <h2>Implementation</h2>
-        <FileBrowser
-          files={files.map((file) => ({
-            path: file?.id,
-            code: file?.data.code,
-          }))}
-          config={{ lang: "tsx" }}
-        />
-        <Footer />
+          {usageComponents.map((usage) => 
+            <div class="mt-2" x-show=`activeUsageFile === '${escapeString(usage.id)}'`>
+              <DemoContainer name={usage.id}>
+                <usage.Component />
+              </DemoContainer>
+            </div>
+          )}
+
+          <h2>Implementation</h2>
+          <FileBrowser
+            files={files.map((file) => ({
+              path: file?.id,
+              code: file?.data.code,
+            }))}
+            config={{ lang: "tsx" }}
+          />
+          <Footer />
+        </article>
       </main>
     </ExtendedLayout>
   </body>
