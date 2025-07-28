@@ -57,12 +57,13 @@ const files = [...implementation, ...dependencies].filter(Boolean);
 
 const collection = collectionRef && (await getEntry(collectionRef));
 const defaultUsageFile = usage[0]?.id;
-const usageComponents = await Promise.all(
-	usage.map(async (file) => ({
+
+const usageComponents = usage
+	.map((file) => ({
 		Component: getSnippetWrapper(file.id),
 		id: file.id,
-	})),
-);
+	}))
+	.filter((file) => file.Component !== undefined);
 ---
 
 <html lang="en">
@@ -96,15 +97,19 @@ const usageComponents = await Promise.all(
 
         <article class="min-w-0" x-data=`{ activeUsageFile: '${defaultUsageFile}' }`>
           <slot />
-          <h2>Usage</h2>
-          <FileBrowser
-            files={usage.map((file) => ({
-              path: file?.id,
-              code: file?.data.code,
-            }))}
-            config={{ lang: "tsx" }}
-            dataId="activeUsageFile"
-          />
+          {usage.length > 0 && (
+            <>
+              <h2>Usage</h2>
+              <FileBrowser
+                files={usage.map((file) => ({
+                  path: file?.id,
+                  code: file?.data.code,
+                }))}
+                config={{ lang: "tsx" }}
+                dataId="activeUsageFile"
+              />
+            </>
+          )}
 
           <!-- <div class="w-64 shrink-0" slot="sidebar">Sidebar content</div> -->
         <!-- </SplitLayout> -->

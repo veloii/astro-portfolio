@@ -51,7 +51,7 @@ const props = Astro.props;
 
 	// Generate an index that maps names to wrapper components with static imports
 	const imports = snippetNames
-		.map((name, index) => {
+		.map((name) => {
 			const componentName = sanitizeName(name);
 			return `import ${componentName} from './wrappers/${componentName}.astro';`;
 		})
