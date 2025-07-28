@@ -2,8 +2,12 @@
 
 @plugin '@tailwindcss/typography';
 
+@source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
+@source "@veloi.me/snippets/**/*.tsx";
+
 @theme {
-	--font-sans: Manrope VF, Manrope, ui-sans-serif, system-ui, sans-serif,
+	--font-sans:
+		Manrope VF, Manrope, ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -105,14 +109,21 @@
 }
 
 .cursor-newtab {
-	cursor: url("/assets/images/new-tab.png") 10 10, pointer;
+	cursor:
+		url("/assets/images/new-tab.png") 10 10,
+		pointer;
 }
 
 .animated-underline {
-	background: linear-gradient(#57534e, #57534e),
+	background:
+		linear-gradient(#57534e, #57534e),
 		linear-gradient(to right, #a3a3a3, #a3a3a3);
-	background-size: 100% 2px, 0 2px;
-	background-position: 100% 100%, 0 100%;
+	background-size:
+		100% 2px,
+		0 2px;
+	background-position:
+		100% 100%,
+		0 100%;
 	background-repeat: no-repeat;
 }
 
@@ -125,5 +136,7 @@
 
 .animated-underline:hover,
 .animated-underline:focus-visible {
-	background-size: 0 2px, 100% 2px;
+	background-size:
+		0 2px,
+		100% 2px;
 }
