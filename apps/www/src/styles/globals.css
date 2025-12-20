@@ -6,8 +6,7 @@
 @source "@veloi.me/snippets/**/*.tsx";
 
 @theme {
-	--font-sans:
-		Manrope VF, Manrope, ui-sans-serif, system-ui, sans-serif,
+	--font-sans: Manrope VF, Manrope, ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -24,6 +23,30 @@
 
 :root {
 	color-scheme: dark;
+	--twoslash-border-color: #282828 !important;
+	--twoslash-underline-color: #ffc799 !important;
+	--twoslash-highlighted-border: #ffc799 !important;
+	--twoslash-highlighted-bg: #ffc79920 !important;
+	--twoslash-popup-bg: #161616 !important;
+	--twoslash-popup-color: #fff !important;
+	--twoslash-popup-shadow: rgba(0, 0, 0, 0.4) 0px 8px 24px !important;
+	--twoslash-docs-color: #a0a0a0 !important;
+	--twoslash-docs-font: inherit !important;
+	--twoslash-code-font: inherit !important;
+	--twoslash-code-font-size: 1em !important;
+	--twoslash-matched-color: #ffc799 !important;
+	--twoslash-unmatched-color: #505050 !important;
+	--twoslash-cursor-color: #ffc799 !important;
+	--twoslash-error-color: #ff8080 !important;
+	--twoslash-error-bg: #ff808015 !important;
+	--twoslash-warn-color: #ffc799 !important;
+	--twoslash-warn-bg: #ffc79915 !important;
+	--twoslash-tag-color: #99ffe4 !important;
+	--twoslash-tag-bg: #99ffe415 !important;
+	--twoslash-tag-warn-color: #ffc799 !important;
+	--twoslash-tag-warn-bg: #ffc79915 !important;
+	--twoslash-tag-annotate-color: #99ffe4 !important;
+	--twoslash-tag-annotate-bg: #99ffe415 !important;
 }
 
 @utility prose-invert {
@@ -109,21 +132,14 @@
 }
 
 .cursor-newtab {
-	cursor:
-		url("/assets/images/new-tab.png") 10 10,
-		pointer;
+	cursor: url("/assets/images/new-tab.png") 10 10, pointer;
 }
 
 .animated-underline {
-	background:
-		linear-gradient(#57534e, #57534e),
+	background: linear-gradient(#57534e, #57534e),
 		linear-gradient(to right, #a3a3a3, #a3a3a3);
-	background-size:
-		100% 2px,
-		0 2px;
-	background-position:
-		100% 100%,
-		0 100%;
+	background-size: 100% 2px, 0 2px;
+	background-position: 100% 100%, 0 100%;
 	background-repeat: no-repeat;
 }
 
@@ -136,7 +152,5 @@
 
 .animated-underline:hover,
 .animated-underline:focus-visible {
-	background-size:
-		0 2px,
-		100% 2px;
+	background-size: 0 2px, 100% 2px;
 }

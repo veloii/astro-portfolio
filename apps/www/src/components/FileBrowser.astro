@@ -2,9 +2,14 @@
 import type { ComponentProps, HTMLAttributes } from "astro/types";
 import { Code } from "astro:components";
 import { escapeString } from "../utils/escape-string";
+import { transformerTwoslash, rendererRich } from "@shikijs/twoslash";
+import path from "node:path";
+import { JsxEmit } from "typescript";
+import "@shikijs/twoslash/style-rich.css";
 
 type Props = {
 	files: { path: string; code: string }[];
+	deps?: { path: string; code: string }[];
 	config?: Omit<ComponentProps<typeof Code>, "code">;
 	dataId?: string;
 } & HTMLAttributes<"div">;
@@ -15,6 +20,7 @@ const {
 	class: className,
 	config,
 	dataId: dataIdProp,
+	deps = [],
 	...props
 } = Astro.props;
 
@@ -23,6 +29,10 @@ const dataId = dataIdProp ? escapeString(dataIdProp) : "activeFile";
 const file = files[0];
 if (file === undefined) throw new Error("Must contain one file");
 const defaultPath = escapeString(file.path);
+
+type StringRecord = Record<string, string>;
+
+const allFiles = [...files, ...deps];
 ---
 
 <div
@@ -51,7 +61,24 @@ const defaultPath = escapeString(file.path);
       )
     })}
   </div>
-  {files.map((file) => (
-    <Code code={file.code} {...config} class="max-h-180 p-3 pt-12 text-sm leading-6" x-show=`${dataId} === '${escapeString(file.path)}'` />
-  ))}
+  {files.map((file) => {
+    const otherFiles = allFiles.filter(f => f.path !== file.path).reduce((acc, curr) => {
+      const relativePath = path.relative(file.path, curr.path).slice(1)
+      acc[relativePath]= curr.code;
+      return acc
+    }, {} as StringRecord);
+
+    return <Code code={file.code} {...config}
+      transformers={[
+        transformerTwoslash({ renderer: rendererRich(), twoslashOptions: {
+          extraFiles: otherFiles,
+          compilerOptions: {
+            jsx: JsxEmit.ReactJSX,
+            jsxImportSource: 'react'
+          }
+        }})
+      ]}
+      class="max-h-180 p-3 pt-12 text-sm leading-6" x-show=`${dataId} === '${escapeString(file.path)}'` />
+    })
+  }
 </div>

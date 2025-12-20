@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function useDetectSticky(
   ref: React.RefObject<HTMLElement | null>,

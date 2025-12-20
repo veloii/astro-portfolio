@@ -6,7 +6,7 @@ import {
   type SerializeOptions,
 } from "../state-serialization";
 
-export const createURLStorage = <T>(
+export const createURLStorage = <T,>(
   schema: z.ZodType<T>,
   options?: Omit<SerializeOptions<T>, "paramName">,
 ): PersistStorage<T> => {

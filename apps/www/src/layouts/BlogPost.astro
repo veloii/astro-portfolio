@@ -64,6 +64,16 @@ const usageComponents = usage
 		id: file.id,
 	}))
 	.filter((file) => file.Component !== undefined);
+
+const usageFiles = usage.map((file) => ({
+	path: file?.id,
+	code: file?.data.code,
+}));
+
+const implFiles = files.map((file) => ({
+	path: file?.id,
+	code: file?.data.code,
+}));
 ---
 
 <html lang="en">
@@ -101,10 +111,8 @@ const usageComponents = usage
             <>
               <h2>Usage</h2>
               <FileBrowser
-                files={usage.map((file) => ({
-                  path: file?.id,
-                  code: file?.data.code,
-                }))}
+                files={usageFiles}
+                deps={implFiles}
                 config={{ lang: "tsx" }}
                 dataId="activeUsageFile"
               />
@@ -123,10 +131,7 @@ const usageComponents = usage
 
           <h2>Implementation</h2>
           <FileBrowser
-            files={files.map((file) => ({
-              path: file?.id,
-              code: file?.data.code,
-            }))}
+            files={implFiles}
             config={{ lang: "tsx" }}
           />
           <Footer />
