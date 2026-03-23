@@ -64,7 +64,7 @@ export const createStateSerializer = <
 
 export const createStateDeserializer = <
   TSchema extends z.ZodType,
-  State extends z.infer<TSchema> = TSchema,
+  State extends z.infer<TSchema> = z.infer<TSchema>,
 >(
   schema: TSchema,
 ) => ({
