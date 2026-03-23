@@ -3,10 +3,11 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import snippetRegistryIntegration from "./src/integrations/demo-snippet-registry";
+import uxPreviewRegistryIntegration from "./src/integrations/demo-ux-preview-registry";
 
 import alpinejs from "@astrojs/alpinejs";
 
-import preact from "@astrojs/preact";
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,8 +16,9 @@ export default defineConfig({
 		mdx(),
 		sitemap(),
 		alpinejs(),
-		preact({ compat: true }),
+		react(),
 		snippetRegistryIntegration(),
+		uxPreviewRegistryIntegration(),
 	],
 	prefetch: true,
 	vite: {
@@ -24,7 +26,7 @@ export default defineConfig({
 	},
 	markdown: {
 		shikiConfig: {
-			theme: "vesper",
+			theme: "github-light",
 		},
 	},
 });

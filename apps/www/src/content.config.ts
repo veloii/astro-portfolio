@@ -79,8 +79,87 @@ const snippetCollections = defineCollection({
 	}),
 });
 
+const colourEnum = z.enum([
+	"red",
+	"orange",
+	"amber",
+	"yellow",
+	"lime",
+	"green",
+	"emerald",
+	"teal",
+	"cyan",
+	"sky",
+	"blue",
+	"indigo",
+	"violet",
+	"purple",
+	"fuchsia",
+	"pink",
+	"rose",
+]);
+
+const uxPreviewsDirectory = resolvePkg("@veloi.me/ux-preview", ".");
+
+if (!uxPreviewsDirectory) throw new Error("No ux-preview directory");
+
+const uxPreviews = defineCollection({
+	type: "content",
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		link: z.string().url().optional(),
+		logo: reference("uxPreviewImplementations").optional(),
+		usage: z
+			.union([
+				z.array(reference("uxPreviewImplementations")),
+				reference("uxPreviewImplementations"),
+			])
+			.optional(),
+		pubDate: z.coerce.date(),
+		updatedDate: z.coerce.date().optional(),
+		tags: z.array(z.string()).optional(),
+		collection: reference("uxPreviewCollections").optional(),
+		dependencies: z.array(reference("uxPreviewImplementations")).optional(),
+		implementation: z.union([
+			z.array(reference("uxPreviewImplementations")),
+			reference("uxPreviewImplementations"),
+		]),
+	}),
+});
+
+const uxPreviewImplementations = defineCollection({
+	loader: async () => {
+		const dir = path.join(path.parse(uxPreviewsDirectory).dir, "src");
+		const stream = fg.stream(dir + MATCH);
+		const result: { code: string; id: string }[] = [];
+		for await (const entry of stream) {
+			const buffer = await fs.readFile(entry);
+			const code = buffer.toString("utf8");
+			const filePath = entry.toString("utf8");
+			const id = path.relative(dir, filePath);
+			result.push({ code, id });
+		}
+		return result;
+	},
+	schema: z.object({
+		code: z.string(),
+	}),
+});
+
+const uxPreviewCollections = defineCollection({
+	loader: file("src/content/ux-collections.json"),
+	schema: z.object({
+		id: z.string(),
+		colour: colourEnum,
+	}),
+});
+
 export const collections = {
 	snippets,
 	snippetImplementations,
 	snippetCollections,
+	uxPreviews,
+	uxPreviewImplementations,
+	uxPreviewCollections,
 };

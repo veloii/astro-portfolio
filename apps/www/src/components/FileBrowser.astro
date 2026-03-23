@@ -36,11 +36,11 @@ const allFiles = [...files, ...deps];
 ---
 
 <div
-  class:list={["not-prose bg-stone-800 rounded-2xl overflow-hidden relative", className, classes]}
+  class:list={["not-prose bg-stone-100 rounded-2xl overflow-hidden relative", className, classes]}
   {...(dataIdProp ? {} : {"x-data": `{ '${dataId}': '${defaultPath}' }`})}
   {...props}
 >
-  <div class="border-stone-700 px-2 flex overflow-x-auto pt-2 absolute bg-gradient-to-b from-stone-800 from-40% to-transparent w-full pb-6">
+  <div class="border-stone-200 px-2 flex overflow-x-auto pt-2 absolute bg-gradient-to-b from-stone-100 from-40% to-transparent w-full pb-6">
     {files.map((file) => {
       const filePath = escapeString(file.path)
       const path = file.path.split("/")
@@ -48,7 +48,7 @@ const allFiles = [...files, ...deps];
         <button
           @click=`${dataId} = '${filePath}'`
           :data-active=`${dataId} === '${filePath}'`
-          class="shrink-0 border border-transparent data-active:bg-stone-700 data-active:border-stone-600 data-active:text-stone-200 text-stone-400 rounded-full px-3 py-0.5 text-sm cursor-pointer"
+          class="shrink-0 border border-transparent data-active:bg-stone-200 data-active:border-stone-300 data-active:text-stone-800 text-stone-500 rounded-full px-3 py-0.5 text-sm cursor-pointer"
         >
           {path.map((entry, index) => {
             const isLast = index === path.length - 1

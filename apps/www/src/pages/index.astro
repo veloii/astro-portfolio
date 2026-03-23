@@ -1,67 +1,126 @@
 ---
+import { getCollection, getEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Card from "../components/Card.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import DefaultLayout from "../layouts/DefaultLayout.astro";
+import { getUxPreviewWrapper } from "../../generated/ux-preview-wrappers";
+import { Logo as ExamCatLogo } from "@veloi.me/ux-preview/exam-cat-logo";
 
-const projects = [
-	{
-		name: "Vosa",
-		description:
-			"A modern, open-source, and self-hosted drop-in replacement for Vercel Analytics. Ready to be deployed in 5 lines of code.",
-		link: "https://vosa.dev",
-	},
-	{
-		name: "Simple Scoped Zustand",
-		description:
-			"A tiny library to make consumption of big zustand stores easier with scoped hooks that perform logic in a parent provider.",
-		link: "https://github.com/veloii/simple-scoped-zustand",
-	},
-	{
-		name: "def-gen",
-		description:
-			"A powerful tool to infer types from JavaScript values and generate code from these inferred types.",
-		link: "https://github.com/veloii/def-gen/",
-	},
-	{
-		name: "ClassCharts API Docs",
-		description:
-			"Unofficial OpenAPI docs for the student & parent clients to simplify building around ClassCharts.",
-		link: "https://classchartsapi.github.io/api-docs/",
-	},
-];
+const uxPreviews = (await getCollection("uxPreviews"))?.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+function arrayify<T>(input: T | T[]) {
+    return (Array.isArray(input) ? input : [input]).filter(
+        (a) => a !== undefined,
+    );
+}
+
+const logos: Record<string, any> = {
+    "exam-cat-logo.tsx": ExamCatLogo,
+};
+
+const uxPreviewsWithComponents = await Promise.all(
+    uxPreviews.map(async (preview) => {
+        const usageRefs = preview.data.usage
+            ? arrayify(preview.data.usage)
+            : [];
+        const usageEntries = await Promise.all(
+            usageRefs.map((ref) => getEntry(ref)),
+        );
+        const component = usageEntries
+            .map((entry) => entry && getUxPreviewWrapper(entry.id))
+            .find((c) => c !== undefined);
+        const logoEntry =
+            preview.data.logo && (await getEntry(preview.data.logo));
+        const LogoComponent = logoEntry ? logos[logoEntry.id] : undefined;
+        return { ...preview, Component: component, LogoComponent };
+    }),
+);
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body>
-    <DefaultLayout>
-      <Header title={SITE_TITLE} />
-      <main class="space-y-8 pt-2 pb-8">
-        <p class="text-stone-200">
-          Crafting open-source solutions.
-        </p>
-        <div class="h-0.5 bg-stone-800"></div>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <DefaultLayout>
+            <Header title={SITE_TITLE} />
+            <main class="space-y-8 pt-2 pb-8">
+                <p class="text-stone-700">I design & build interfaces.</p>
+                <div class="h-0.5 bg-stone-200"></div>
 
-        <div class="space-y-10">
-          {
-            projects.map((project) => (
-              <Card
-                name={project.name}
-                link={project.link}
-                description={project.description}
-                external
-              />
-            ))
-          }
-        </div>
-      </main>
-      <Footer />
-    </DefaultLayout>
-  </body>
+                {
+                    uxPreviewsWithComponents.length > 0 && (
+                        <div class="space-y-10">
+                            {uxPreviewsWithComponents.map((preview) => (
+                                <div class="space-y-1">
+                                    <div class="flex justify-between gap-4 items-center">
+                                        <span class="font-semibold">
+                                            {preview.data.title}
+                                        </span>
+                                        <span class="text-stone-400 text-sm shrink-0">
+                                            <FormattedDate
+                                                date={preview.data.pubDate}
+                                            />
+                                        </span>
+                                    </div>
+                                    <p class="text-stone-500 text-balance font-normal">
+                                        {preview.data.description}
+                                    </p>
+                                    {preview.Component && (
+                                        <div class="relative flex items-center justify-center rounded-2xl border border-stone-200 bg-stone-50 px-8 py-14 !mt-4">
+                                            {preview.data.link && (
+                                                <a
+                                                    href={preview.data.link}
+                                                    target="_blank"
+                                                    class="absolute bottom-5 right-5 flex items-center gap-2 text-sm text-stone-400 hover:text-stone-600 transition cursor-newtab"
+                                                >
+                                                    {preview.LogoComponent ? (
+                                                        <preview.LogoComponent className="h-6" />
+                                                    ) : (
+                                                        <span class="font-medium">
+                                                            {
+                                                                new URL(
+                                                                    preview.data
+                                                                        .link,
+                                                                ).hostname
+                                                            }
+                                                        </span>
+                                                    )}
+                                                </a>
+                                            )}
+                                            <preview.Component />
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )
+                }
+
+                <div class="h-0.5 bg-stone-200"></div>
+
+                <Card
+                    name="exam.cat"
+                    link="https://exam.cat"
+                    description="Search any past paper question before you can blink."
+                    external
+                />
+
+                <Card
+                    name="ClassCharts API Docs"
+                    link="https://classchartsapi.github.io/api-docs/"
+                    description="Unofficial OpenAPI docs for the student & parent clients to simplify building around ClassCharts."
+                    external
+                />
+            </main>
+            <Footer />
+        </DefaultLayout>
+    </body>
 </html>

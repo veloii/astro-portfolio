@@ -22,14 +22,14 @@ const {
           <p
             class:list={[
               item.href
-                ? "text-stone-300 animated-underline"
-                : "text-stone-400",
+                ? "text-stone-600 animated-underline"
+                : "text-stone-500",
             ]}
           >
             {item.label}
           </p>
           {index !== items.length - 1 && (
-            <ChevronRight class="shrink-0 size-5 text-stone-500" />
+            <ChevronRight class="shrink-0 size-5 text-stone-400" />
           )}
         </div>
       );

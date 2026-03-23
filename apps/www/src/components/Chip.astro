@@ -2,23 +2,23 @@
 import type { HTMLAttributes } from "astro/types";
 
 const colours = {
-	red: "bg-red-900 text-red-200",
-	orange: "bg-orange-900 text-orange-200",
-	amber: "bg-amber-900 text-amber-200",
-	yellow: "bg-yellow-900 text-yellow-200",
-	lime: "bg-lime-900 text-lime-200",
-	green: "bg-green-900 text-green-200",
-	emerald: "bg-emerald-900 text-emerald-200",
-	teal: "bg-teal-900 text-teal-200",
-	cyan: "bg-cyan-900 text-cyan-200",
-	sky: "bg-sky-900 text-sky-200",
-	blue: "bg-blue-900 text-blue-200",
-	indigo: "bg-indigo-900 text-indigo-200",
-	violet: "bg-violet-900 text-violet-200",
-	purple: "bg-purple-900 text-purple-200",
-	fuchsia: "bg-fuchsia-900 text-fuchsia-200",
-	pink: "bg-pink-900 text-pink-200",
-	rose: "bg-rose-900 text-rose-200",
+	red: "bg-red-100 text-red-800",
+	orange: "bg-orange-100 text-orange-800",
+	amber: "bg-amber-100 text-amber-800",
+	yellow: "bg-yellow-100 text-yellow-800",
+	lime: "bg-lime-100 text-lime-800",
+	green: "bg-green-100 text-green-800",
+	emerald: "bg-emerald-100 text-emerald-800",
+	teal: "bg-teal-100 text-teal-800",
+	cyan: "bg-cyan-100 text-cyan-800",
+	sky: "bg-sky-100 text-sky-800",
+	blue: "bg-blue-100 text-blue-800",
+	indigo: "bg-indigo-100 text-indigo-800",
+	violet: "bg-violet-100 text-violet-800",
+	purple: "bg-purple-100 text-purple-800",
+	fuchsia: "bg-fuchsia-100 text-fuchsia-800",
+	pink: "bg-pink-100 text-pink-800",
+	rose: "bg-rose-100 text-rose-800",
 };
 
 type Props = {
@@ -35,5 +35,4 @@ const {
 
 <div class:list={["inline-block relative rounded-full overflow-hidden px-2.5 py-0.5 text-sm", colours[colour], className, classes]} {...props}>
 	<slot />
-	<div class="bg-white absolute -bottom-1 blur h-1.5 w-2/3 left-1/2 -translate-x-1/2" />
 </div>

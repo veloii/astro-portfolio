@@ -9,7 +9,7 @@ type Props = {
 const { external, name, description, link } = Astro.props;
 ---
 
-<div class="border-l-0 border-stone-800 space-y-1">
+<div class="border-l-0 border-stone-200 space-y-1">
   <div class="flex justify-between gap-4 items-center">
     <a
       target={external ? "_blank" : "_self"}
@@ -22,7 +22,7 @@ const { external, name, description, link } = Astro.props;
       {name}
     </a>
   </div>
-  <p class="text-stone-300 text-balance">
+  <p class="text-stone-500 text-balance font-normal">
     {description}
   </p>
 </div>

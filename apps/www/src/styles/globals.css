@@ -4,6 +4,7 @@
 
 @source "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 @source "@veloi.me/snippets/**/*.tsx";
+@source "../../../../packages/ux-preview/src/**/*.tsx";
 
 @theme {
 	--font-sans: Manrope VF, Manrope, ui-sans-serif, system-ui, sans-serif,
@@ -22,56 +23,37 @@
 }
 
 :root {
-	color-scheme: dark;
-	--twoslash-border-color: #282828 !important;
-	--twoslash-underline-color: #ffc799 !important;
-	--twoslash-highlighted-border: #ffc799 !important;
-	--twoslash-highlighted-bg: #ffc79920 !important;
-	--twoslash-popup-bg: #161616 !important;
-	--twoslash-popup-color: #fff !important;
-	--twoslash-popup-shadow: rgba(0, 0, 0, 0.4) 0px 8px 24px !important;
-	--twoslash-docs-color: #a0a0a0 !important;
+	color-scheme: light;
+	--twoslash-border-color: #e0e0e0 !important;
+	--twoslash-underline-color: #c2410c !important;
+	--twoslash-highlighted-border: #c2410c !important;
+	--twoslash-highlighted-bg: #c2410c15 !important;
+	--twoslash-popup-bg: #ffffff !important;
+	--twoslash-popup-color: #1c1917 !important;
+	--twoslash-popup-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px !important;
+	--twoslash-docs-color: #57534e !important;
 	--twoslash-docs-font: inherit !important;
 	--twoslash-code-font: inherit !important;
 	--twoslash-code-font-size: 1em !important;
-	--twoslash-matched-color: #ffc799 !important;
-	--twoslash-unmatched-color: #505050 !important;
-	--twoslash-cursor-color: #ffc799 !important;
-	--twoslash-error-color: #ff8080 !important;
-	--twoslash-error-bg: #ff808015 !important;
-	--twoslash-warn-color: #ffc799 !important;
-	--twoslash-warn-bg: #ffc79915 !important;
-	--twoslash-tag-color: #99ffe4 !important;
-	--twoslash-tag-bg: #99ffe415 !important;
-	--twoslash-tag-warn-color: #ffc799 !important;
-	--twoslash-tag-warn-bg: #ffc79915 !important;
-	--twoslash-tag-annotate-color: #99ffe4 !important;
-	--twoslash-tag-annotate-bg: #99ffe415 !important;
+	--twoslash-matched-color: #c2410c !important;
+	--twoslash-unmatched-color: #a8a29e !important;
+	--twoslash-cursor-color: #c2410c !important;
+	--twoslash-error-color: #dc2626 !important;
+	--twoslash-error-bg: #dc262610 !important;
+	--twoslash-warn-color: #d97706 !important;
+	--twoslash-warn-bg: #d9770610 !important;
+	--twoslash-tag-color: #059669 !important;
+	--twoslash-tag-bg: #05966910 !important;
+	--twoslash-tag-warn-color: #d97706 !important;
+	--twoslash-tag-warn-bg: #d9770610 !important;
+	--twoslash-tag-annotate-color: #059669 !important;
+	--twoslash-tag-annotate-bg: #05966910 !important;
+
 }
 
-@utility prose-invert {
-	--tw-prose-body: var(--tw-prose-invert-body) !important;
-	--tw-prose-headings: var(--tw-prose-invert-headings) !important;
-	--tw-prose-lead: var(--tw-prose-invert-lead) !important;
-	--tw-prose-links: var(--tw-prose-invert-links) !important;
-	--tw-prose-bold: var(--tw-prose-invert-bold) !important;
-	--tw-prose-counters: var(--tw-prose-invert-counters) !important;
-	--tw-prose-bullets: var(--tw-prose-invert-bullets) !important;
-	--tw-prose-hr: var(--tw-prose-invert-hr) !important;
-	--tw-prose-quotes: var(--tw-prose-invert-quotes) !important;
-	--tw-prose-quote-borders: var(--tw-prose-invert-quote-borders) !important;
-	--tw-prose-captions: var(--tw-prose-invert-captions) !important;
-	--tw-prose-kbd: var(--tw-prose-invert-kbd) !important;
-	--tw-prose-kbd-shadows: var(--tw-prose-invert-kbd-shadows) !important;
-	--tw-prose-code: var(--tw-prose-invert-code) !important;
-	--tw-prose-pre-code: var(--tw-prose-invert-pre-code) !important;
-	--tw-prose-pre-bg: var(--tw-prose-invert-pre-bg) !important;
-	--tw-prose-th-borders: var(--tw-prose-invert-th-borders) !important;
-	--tw-prose-td-borders: var(--tw-prose-invert-td-borders) !important;
-}
 
 .astro-code {
-	background: var(--color-stone-800) !important;
+	background: var(--color-stone-100) !important;
 }
 
 @font-face {
@@ -136,8 +118,8 @@
 }
 
 .animated-underline {
-	background: linear-gradient(#57534e, #57534e),
-		linear-gradient(to right, #a3a3a3, #a3a3a3);
+	background: linear-gradient(#d6d3d1, #d6d3d1),
+		linear-gradient(to right, #44403c, #44403c);
 	background-size: 100% 2px, 0 2px;
 	background-position: 100% 100%, 0 100%;
 	background-repeat: no-repeat;

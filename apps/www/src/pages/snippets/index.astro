@@ -48,7 +48,7 @@ const byCollection = Object.values(
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
@@ -57,7 +57,7 @@ const byCollection = Object.values(
       <Header title={SITE_TITLE} />
       <main class="space-y-8 pt-2 pb-8">
         <!-- <p class="text-stone-200">.</p> -->
-        <div class="h-0.5 bg-stone-800"></div>
+        <div class="h-0.5 bg-stone-200"></div>
 
         <div class="-mx-3 group -mt-6">
           {byCollection.map(({collection, snippets}) => (
